@@ -1,0 +1,11 @@
+This library provides compiled classes from these public Java libraries/programs for testing and
+benchmarking purposes:
+ - Guava (https://guava.dev/)
+ - OkHttp (https://square.github.io/okhttp/)
+ - Apache Spark (https://spark.apache.org/)
+ - ZXing (https://github.com/zxing/zxing)
+ - Guice (https://github.com/google/guice)
+ - JUnit 4 (https://junit.org/junit4)
+ - Kotlin Compiler (https://kotlinlang.org/)
+ - Scala Compiler (https://www.scala-lang.org)
+ - BitcoinJ (https://bitcoinj.org/)
