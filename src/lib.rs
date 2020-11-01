@@ -3,7 +3,18 @@ use std::thread::spawn;
 use zip::ZipArchive;
 use std::io::{Cursor, Read};
 
-pub fn get_sample_name_bytes(distribution_size: usize) -> Vec<(String, Vec<u8>)> {
+
+#[cfg(test)]
+mod tests {
+    use crate::get_sample_name_bytes;
+
+    #[test]
+    fn test() {
+        get_sample_name_bytes(1000);
+    }
+}
+
+pub fn get_sample_name_bytes(distribution_size: u64) -> Vec<(String, Vec<u8>)> {
     // See NOTICE
     let urls = [
         "https://repo1.maven.org/maven2/com/google/guava/guava/30.0-jre/guava-30.0-jre.jar",
@@ -18,7 +29,7 @@ pub fn get_sample_name_bytes(distribution_size: usize) -> Vec<(String, Vec<u8>)>
     ];
     let mut sizes = HashSet::new();
     urls.iter().map(|&url| {
-        let thing = spawn(move || {
+        let thread = spawn(move || {
             let mut easy = curl::easy::Easy::new();
             let mut dst = vec![];
             easy.url(url).unwrap();
@@ -31,7 +42,7 @@ pub fn get_sample_name_bytes(distribution_size: usize) -> Vec<(String, Vec<u8>)>
             drop(transfer);
             dst
         });
-        ZipArchive::new(Cursor::new(thing.join().unwrap())).unwrap()
+        ZipArchive::new(Cursor::new(thread.join().unwrap())).unwrap()
     }).flat_map(move |mut zip| {
         let len = zip.len();
         let mut vec_classes = vec![];
