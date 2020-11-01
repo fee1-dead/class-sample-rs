@@ -1,5 +1,5 @@
 [package]
-name = "class-sample-rs"
+name = "class_sample"
 version = "0.1.0"
 authors = ["Deadbeef"]
 edition = "2018"
